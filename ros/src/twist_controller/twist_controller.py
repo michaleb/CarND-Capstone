@@ -33,7 +33,7 @@ class Controller(object):
         self.decel_limit = decel_limit
         self.accel_limit = accel_limit
         self.wheel_radius = wheel_radius
-        
+
         self.last_time = rospy.get_time()
 
     def control(self, current_vel, dbw_enabled, linear_vel, angular_vel):
@@ -41,7 +41,7 @@ class Controller(object):
         # Return throttle, brake, steer
 
         if not dbw_enabled:
-        	self.throttle_controller.reset()
+            self.throttle_controller.reset()
             return 0., 0., 0.
 
         current_vel = self.vel_lpf.filt(current_vel)
