@@ -75,6 +75,8 @@ class DBWNode(object):
         self.linear_vel = None
         self.angular_vel = None
 
+        self.throttle = self.brake = self.steering = None
+
         self.loop()
 
     def loop(self):
