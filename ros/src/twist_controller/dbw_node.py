@@ -93,7 +93,7 @@ class DBWNode(object):
             rate.sleep()
 
     def dbw_enabled_cb(self, msg):
-        self.dbw_enabled = msg.data
+        self.dbw_enabled = msg
 
     def twist_cb(self, msg):
         self.linear_vel = msg.twist.linear.x
@@ -101,7 +101,7 @@ class DBWNode(object):
 
     def velocity_cb(self, msg):
         self.current_vel = msg.twist.linear.x
-        self.curr_ang_vel = msg.twist.angular.z
+        #self.curr_ang_vel = msg.twist.angular.z
         
     def publish(self, throttle, brake, steer):
         tcmd = ThrottleCmd()
