@@ -28,15 +28,16 @@ class WaypointUpdater(object):
 
 		self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
 
-		# TODO: Add other member variables you need below
-		self.pose = None
-		self.base_waypoints = None
-		self.waypoints_2d = None
-		self.waypoint_tree = None
-
+		
 		# TODO: Add a subscriber for /traffic_waypoint and /obstacle_waypoint below
 		rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
+
+		# TODO: Add other member variables you need below
+		self.pose = None
+		self.base_wps = None
+		self.waypoints_2d = None
+		self.waypoint_tree = None
 
 		self.loop()
 
@@ -76,7 +77,7 @@ class WaypointUpdater(object):
 	def publish_waypoints(self, closest_idx):
 		lane = Lane()
 		#lane.header = self.base_waypoints.header
-		lane.waypoints = self.base_waypoints.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]
+		lane.waypoints = self.base_wps.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]
 		self.final_waypoints_pub.publish(lane)
 
 
@@ -86,7 +87,7 @@ class WaypointUpdater(object):
 
 	def waypoints_cb(self, waypoints):
 		# TODO: Implement
-		self.base_waypoints = waypoints
+		self.base_wps = waypoints
 		if not self.waypoints_2d:
 			self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
 			self.waypoint_tree = KDTree(self.waypoints_2d)
