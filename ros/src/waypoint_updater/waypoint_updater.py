@@ -78,11 +78,11 @@ class WaypointUpdater(object):
 		lane = Lane()
 		#lane.header = self.base_waypoints.header
 
-		if self.stop_line_idx = -1 or self.stop_line_idx >= (closest_idx + LOOKAHEAD_WPS):
+		if self.stop_line_idx == -1 or self.stop_line_idx >= (closest_idx + LOOKAHEAD_WPS):
 			lane.waypoints = self.base_wps.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]
 
 		else:
-			
+
 			
 		self.final_waypoints_pub.publish(lane)
 
