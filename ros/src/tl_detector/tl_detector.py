@@ -8,6 +8,7 @@ from styx_msgs.msg import Lane
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 from light_classification.tl_classifier import TLClassifier
+from waypoint_updater.WaypointUpdater import distance
 import tf
 import cv2
 import yaml
@@ -154,11 +155,14 @@ class TLDetector(object):
                 line = stop_line_positions[i]
                 temp_wp_idx = self.get_closest_waypoint(line[0], line[1])
                 # Find closest stop line waypoint index
+
                 d = temp_wp_idx - car_wp_idx
                 if d >= 0 and d < diff:
-                    diff = d
-                    closest_light = light
-                    line_wp_idx = temp_wp_idx
+                    dist = distance(waypoints, temp_wp_idx, car_wp_idx)
+                    if dist < 40:
+                        diff = d
+                        closest_light = light
+                        line_wp_idx = temp_wp_idx
 
         if closest_light:
             state = self.get_light_state(closest_light)
