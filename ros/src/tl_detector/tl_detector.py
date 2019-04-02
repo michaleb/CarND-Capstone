@@ -8,7 +8,7 @@ from styx_msgs.msg import Lane
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 from light_classification.tl_classifier import TLClassifier
-from waypoint_updater.py import WaypointUpdater 
+from waypoint_updater.waypoint_updater import WaypointUpdater 
 import tf
 import cv2
 import yaml
