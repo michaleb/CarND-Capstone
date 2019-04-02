@@ -8,7 +8,7 @@ from styx_msgs.msg import Lane
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 from light_classification.tl_classifier import TLClassifier
-from waypoint_updater.WaypointUpdater import distance
+from waypoint_updater import WaypointUpdater 
 import tf
 import cv2
 import yaml
@@ -25,6 +25,7 @@ class TLDetector(object):
         self.waypoint_tree = None
         self.camera_image = None
         self.lights = []
+        self.wp_updater = WaypointUpdater()
 
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub2 = rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
@@ -158,7 +159,7 @@ class TLDetector(object):
 
                 d = temp_wp_idx - car_wp_idx
                 if d >= 0 and d < diff:
-                    dist = distance(waypoints, temp_wp_idx, car_wp_idx)
+                    dist = self.wp_updater.distance(waypoints, temp_wp_idx, car_wp_idx)
                     if dist < 40:
                         diff = d
                         closest_light = light
