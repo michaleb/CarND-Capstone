@@ -182,21 +182,13 @@ class TLDetector(object):
 
         sld = abs(line[0] - self.pose.pose.position.x) + abs(line[1] - self.pose.pose.position.y)
         
-        if closest_light and sld < 30:
+        if closest_light and sld < 20:
             state = self.get_light_state(closest_light)
             return line_wp_idx, state
         
         return -1, TrafficLight.UNKNOWN
 
-
-    def distance(self, waypoints, wp1, wp2):
-        dist = 0
-        dl = lambda a, b: math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2  + (a.z-b.z)**2)
-        for i in range(wp1, wp2+1):
-            dist += dl(waypoints[wp1].pose.pose.position, waypoints[i].pose.pose.position)
-            wp1 = i
-        return dist     
-
+    
 if __name__ == '__main__':
     try:
         TLDetector()
