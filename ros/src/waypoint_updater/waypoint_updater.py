@@ -20,7 +20,7 @@ as well as to verify your TL classifier.
 TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
-LOOKAHEAD_WPS = 70 # Number of waypoints we will publish. You can change this $
+LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. You can change this $
 MAX_DECEL = 5
 
 
@@ -45,7 +45,7 @@ class WaypointUpdater(object):
 		self.loop()
 
 	def loop(self):
-		rate = rospy.Rate(30)
+		rate = rospy.Rate(20)
 		while not rospy.is_shutdown():
 			if self.pose and self.base_wps:
 				self.publish_waypoints()
