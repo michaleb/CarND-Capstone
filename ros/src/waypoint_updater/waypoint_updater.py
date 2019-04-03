@@ -21,6 +21,7 @@ TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
 LOOKAHEAD_WPS = 60 # Number of waypoints we will publish. You can change this $
+MAX_DECEL = 0.5
 
 
 class WaypointUpdater(object):
@@ -90,7 +91,6 @@ class WaypointUpdater(object):
 			lane.waypoints = base_waypoints
 		else:
 			lane.waypoints = self.decelerate_waypoints(base_waypoints, closest_idx)
-			print("RED", stopline_wp_idx)
 
 		return lane	
 	
