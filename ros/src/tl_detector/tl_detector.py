@@ -180,7 +180,7 @@ class TLDetector(object):
                     closest_light = light
                     line_wp_idx = temp_wp_idx
 
-        wps = self.waypoints.waypoints[car_wp_idx:line_wp_idx]
+        wps = self.waypoints.waypoints[car_wp_idx:car_wp_idx + line_wp_idx]
         dist = self.distance(wps, car_wp_idx, line_wp_idx)
         
         if closest_light and dist < 30:
