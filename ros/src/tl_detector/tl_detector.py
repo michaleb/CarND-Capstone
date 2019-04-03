@@ -11,7 +11,7 @@ from light_classification.tl_classifier import TLClassifier
 import tf
 import cv2
 import yaml
-import math
+#import math
 
 STATE_COUNT_THRESHOLD = 3
 
@@ -182,7 +182,7 @@ class TLDetector(object):
 
         sld = line[0] - self.pose.pose.position.x
         
-        if closest_light and sld < 30:
+        if closest_light and sld < 10:
             state = self.get_light_state(closest_light)
             return line_wp_idx, state
         
