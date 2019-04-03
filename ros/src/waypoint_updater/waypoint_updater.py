@@ -90,6 +90,7 @@ class WaypointUpdater(object):
 			lane.waypoints = base_waypoints
 		else:
 			lane.waypoints = self.decelerate_waypoints(base_waypoints, closest_idx)
+			print("RED", stopline_wp_idx)
 
 		return lane	
 	
