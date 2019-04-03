@@ -110,7 +110,7 @@ class TLDetector(object):
         #TODO implement
         closest_idx = self.waypoint_tree.query([x, y], 1)[1]
 
-        #check if closest point is ahead (of car) or not
+        '''#check if closest point is ahead (of car) or not
         closest_coord = self.waypoints_2d[closest_idx]
         prev_coord = self.waypoints_2d[closest_idx - 1]
 
@@ -122,7 +122,7 @@ class TLDetector(object):
         val = np.dot(cl_vect-prev_vect, pos_vect-cl_vect)
 
         if val > 0:
-            closest_idx = (closest_idx + 1) % len(self.waypoints_2d)
+            closest_idx = (closest_idx + 1) % len(self.waypoints_2d)'''
 
         return closest_idx
 
