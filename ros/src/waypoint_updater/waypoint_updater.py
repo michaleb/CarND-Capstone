@@ -75,18 +75,41 @@ class WaypointUpdater(object):
 		return closest_idx
 	
 	
-	def publish_waypoints(self, closest_idx):
-		lane = Lane()
-		#lane.header = self.base_waypoints.header
+	def publish_waypoints(self):
+		final_lane = self.generate_lane()
+		self.final_waypoints_pub.publish(final_lane)
+		
+	def generate_lane(self):
+		lane = Lane()	
 
-		if self.stopline_wp_idx == -1 or self.stopline_wp_idx >= (closest_idx + LOOKAHEAD_WPS):
-			lane.waypoints = self.base_wps.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]
+		closest_idx = self.get_closest_waypoint_idx()
+		farthest_idx = closest_idx + LOOKAHEAD_WPS
+		base_waypoints = self.base_wps.waypoints[closest_idx:farthest_idx]
 
-		#else:
+		if self.stopline_wp_idx == -1 or (self.stopline_wp_idx >= farthest):
+			lane.waypoints = base_waypoints
+		else:
+			lane.waypoints = self.decelerate_waypoints(base_waypoints, closest_idx)
 
-			
-		self.final_waypoints_pub.publish(lane)
+		return lane	
+	
+	def decelerate_waypoints(self, waypoints, closest_idx):
+		temp = []
+		for i, wp in enumerate(waypoints):
 
+			p = Waypoint()
+			p.pose = wp.pose
+
+			stop_idx = max(self.stopline_wp_idx - closest_idx - 2, 0) # Two waypoints back from line so front of car stops at line
+			dist = self.distance(waypoints, i, stop_idx)
+			vel = math.sqrt(2 * MAX_DECEL * dist)
+			if vel < 1.:
+				vel = 0.
+
+			p.twist.twist.linear.x = min(vel, wp.twist.twist.linear.x)
+			temp.append(p)
+
+		return temp
 
 	def pose_cb(self, msg):
 		# TODO: Implement
