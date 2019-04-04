@@ -93,6 +93,7 @@ class WaypointUpdater(object):
 		return lane	
 	
 	def decelerate_waypoints(self, waypoints, closest_idx):
+		idx = 0
 		temp = []
 		for i, wp in enumerate(waypoints, closest_idx):
 
@@ -105,8 +106,9 @@ class WaypointUpdater(object):
 				vel = 0.
 			
 			else:
-				dist = self.distance(waypoints, i, stop_idx)
-				vel = math.sqrt(2 * MAX_DECEL * dist)
+				#dist = self.distance(waypoints, i, stop_idx)
+				idx += 1 if vel > 0.
+				vel = wp.twist.twist.linear.x - idx*MAX_DECEL #math.sqrt(2 * MAX_DECEL * dist)
 				if vel < 1.:
 					vel = 0.
 
