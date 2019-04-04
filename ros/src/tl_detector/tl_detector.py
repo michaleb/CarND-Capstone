@@ -181,8 +181,7 @@ class TLDetector(object):
                     line_wp_idx = temp_wp_idx
         
         sld = math.hypot((line[0] - self.pose.pose.position.x), (line[1] - self.pose.pose.position.y))
-        #abs(line[0] - self.pose.pose.position.x) + abs(line[1] - self.pose.pose.position.y)
-        
+               
         if closest_light and sld <= 30:
             state = self.get_light_state(closest_light)
             return line_wp_idx, state
