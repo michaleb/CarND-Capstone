@@ -159,7 +159,7 @@ class TLDetector(object):
         closest_light = None
         line_wp_idx = None
         car_wp_idx = None
-        line = None
+        sld = 100
         
         # List of positions that correspond to the line to stop in front of for a given intersection
         stop_line_positions = self.config['stop_line_positions']
@@ -179,8 +179,7 @@ class TLDetector(object):
                     diff = d
                     closest_light = light
                     line_wp_idx = temp_wp_idx
-
-        sld = math.hypot((line[0] - self.pose.pose.position.x), (line[1] - self.pose.pose.position.y))
+                    sld = math.hypot((line[0] - self.pose.pose.position.x), (line[1] - self.pose.pose.position.y))
         #abs(line[0] - self.pose.pose.position.x) + abs(line[1] - self.pose.pose.position.y)
         
         if closest_light and sld <= 30:
