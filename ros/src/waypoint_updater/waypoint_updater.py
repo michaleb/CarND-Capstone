@@ -21,7 +21,7 @@ TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
 LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. You can change this $
-MAX_DECEL = 150
+MAX_DECEL = 2.877786025
 
 
 class WaypointUpdater(object):
@@ -101,7 +101,7 @@ class WaypointUpdater(object):
 
 			stop_idx = max(self.stopline_wp_idx - closest_idx - 2, 0) # Two waypoints back from line so front of car stops at line
 			dist = self.distance(waypoints, i, stop_idx)
-			vel = math.sqrt(2 * MAX_DECEL * dist)
+			vel = math.sqrt(pow(wp.twist.twist.linear.x, 2) - 2 * MAX_DECEL * dist)
 			if vel < 1.:
 				vel = 0.
 
