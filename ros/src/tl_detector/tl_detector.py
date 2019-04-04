@@ -11,7 +11,7 @@ from light_classification.tl_classifier import TLClassifier
 import tf
 import cv2
 import yaml
-#import math
+import math
 
 STATE_COUNT_THRESHOLD = 3
 
