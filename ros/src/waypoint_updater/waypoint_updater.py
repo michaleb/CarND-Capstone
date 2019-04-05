@@ -42,7 +42,7 @@ class WaypointUpdater(object):
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
 		
-		self.loop()
+		self.loop() 
 
 	def loop(self):
 		rate = rospy.Rate(20)
