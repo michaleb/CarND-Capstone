@@ -64,11 +64,6 @@ class DBWNode(object):
                                      max_lat_accel,
                                      max_steer_angle)
         
-        # TODO: Subscribe to all the topics you need to
-        rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.dbw_enabled_cb)
-        rospy.Subscriber('/twist_cmd', TwistStamped, self.twist_cb)
-        rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_cb)
-
         self.current_vel = None
         self.curr_ang_vel = None
         self.dbw_enabled = None
@@ -76,10 +71,10 @@ class DBWNode(object):
         self.angular_vel = None
         self.throttle = self.brake = self.steering = 0
 
-        '''# TODO: Subscribe to all the topics you need to
+        # TODO: Subscribe to all the topics you need to
         rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.dbw_enabled_cb)
         rospy.Subscriber('/twist_cmd', TwistStamped, self.twist_cb)
-        rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_cb)'''
+        rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_cb)
         
         self.loop() 
 
