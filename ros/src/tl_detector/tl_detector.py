@@ -63,12 +63,12 @@ class TLDetector(object):
             if self.pose and self.waypoints and self.has_image:
                 light_wp, state = self.process_traffic_lights()
 
-        '''
-        Publish upcoming red lights at camera frequency.
-        Each predicted state has to occur `STATE_COUNT_THRESHOLD` number
-        of times till we start using it. Otherwise the previous stable state is
-        used.
-        '''     
+                '''
+                Publish upcoming red lights at camera frequency.
+                Each predicted state has to occur `STATE_COUNT_THRESHOLD` number
+                of times till we start using it. Otherwise the previous stable state is
+                used.
+                '''
                 if self.state != state:
                     self.state_count = 0
                     self.state = state
