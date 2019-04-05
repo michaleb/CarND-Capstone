@@ -158,7 +158,7 @@ class TLDetector(object):
         """
         closest_light = None
         line_wp_idx = None
-        car_wp_idx = None
+        #car_wp_idx = None
         line = None
         
         # List of positions that correspond to the line to stop in front of for a given intersection
