@@ -20,7 +20,7 @@ as well as to verify your TL classifier.
 TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
-LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. You can change this $
+LOOKAHEAD_WPS = 50 # Number of waypoints we will publish. You can change this $
 MAX_DECEL = 2.877786025*2
 
 
@@ -93,7 +93,6 @@ class WaypointUpdater(object):
 		return lane	
 	
 	def decelerate_waypoints(self, waypoints, closest_idx):
-		idx = 0
 		temp = []
 		for i, wp in enumerate(waypoints):
 
@@ -111,7 +110,7 @@ class WaypointUpdater(object):
 				if vel < 1.:
 					vel = 0.
 
-			p.twist.twist.linear.x = min(vel, wp.twist.twist.linear.x)
+			p.twist.linear.x = min(vel, wp.twist.linear.x)
 			temp.append(p)
 
 		return temp
