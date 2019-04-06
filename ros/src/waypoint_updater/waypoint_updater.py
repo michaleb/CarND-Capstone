@@ -94,7 +94,7 @@ class WaypointUpdater(object):
 		farthest_idx = closest_idx + LOOKAHEAD_WPS
 		base_waypoints = self.base_wps.waypoints[closest_idx:farthest_idx]
 
-		if (self.has_image and self.stopline_wp_idx == -1) or (self.stopline_wp_idx >= farthest):
+		if (self.has_image and self.stopline_wp_idx == -1) or (self.stopline_wp_idx >= farthest_idx):
 			lane.waypoints = base_waypoints
 		else:
 			lane.waypoints = self.decelerate_waypoints(base_waypoints, closest_idx)
