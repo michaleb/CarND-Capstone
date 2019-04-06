@@ -20,7 +20,7 @@ as well as to verify your TL classifier.
 TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
-LOOKAHEAD_WPS = 200 # Number of waypoints we will publish. You can change this $
+LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. You can change this $
 MAX_DECEL = 2.877786025*2
 
 
