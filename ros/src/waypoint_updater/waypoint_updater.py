@@ -100,7 +100,7 @@ class WaypointUpdater(object):
 			p = Waypoint()
 			p.pose = wp.pose
 
-			stop_idx = max(self.stopline_wp_idx - closest_idx - 3, 0) # Two waypoints back from line so front of car stops at line
+			stop_idx = max(self.stopline_wp_idx - closest_idx - 4, 0) # Two waypoints back from line so front of car stops at line
 			
 			if i >= stop_idx:
 				vel = 0.
@@ -115,9 +115,6 @@ class WaypointUpdater(object):
 			temp.append(p)
 
 		return temp
-
-	def image_cb(self):
-		self.has_image = True
 
 	def pose_cb(self, msg):
 		# TODO: Implement
