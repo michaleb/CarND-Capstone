@@ -30,18 +30,6 @@ class WaypointUpdater(object):
 
 		self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
 
-		'''# TODO: Add other member variables you need below
-		self.pose = None
-		self.base_wps = None
-		self.waypoints_2d = None
-		self.waypoint_tree = None
-		self.stopline_wp_idx = -1'''
-		
-		# TODO: Add a subscriber for /traffic_waypoint and /obstacle_waypoint below
-		rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
-		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
-		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
-
 		# TODO: Add other member variables you need below
 		self.has_image = False
 		self.pose = None
@@ -49,6 +37,19 @@ class WaypointUpdater(object):
 		self.waypoints_2d = None
 		self.waypoint_tree = None
 		self.stopline_wp_idx = -1
+		
+		# TODO: Add a subscriber for /traffic_waypoint and /obstacle_waypoint below
+		rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
+		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
+		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
+
+		'''# TODO: Add other member variables you need below
+		self.has_image = False
+		self.pose = None
+		self.base_wps = None
+		self.waypoints_2d = None
+		self.waypoint_tree = None
+		self.stopline_wp_idx = -1'''
 		
 		self.loop() 
 
