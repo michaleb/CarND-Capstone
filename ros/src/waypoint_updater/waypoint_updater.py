@@ -56,7 +56,7 @@ class WaypointUpdater(object):
 	def loop(self):
 		rate = rospy.Rate(20)
 		while not rospy.is_shutdown():
-			if self.pose and self.base_wps and self.has_image:
+			if self.pose and self.base_wps:
 				self.publish_waypoints()
 			rate.sleep()    
 
@@ -94,7 +94,7 @@ class WaypointUpdater(object):
 		farthest_idx = closest_idx + LOOKAHEAD_WPS
 		base_waypoints = self.base_wps.waypoints[closest_idx:farthest_idx]
 
-		if (self.stopline_wp_idx == -1) or (self.stopline_wp_idx >= farthest):
+		if (self.has_image and self.stopline_wp_idx == -1) or (self.stopline_wp_idx >= farthest):
 			lane.waypoints = base_waypoints
 		else:
 			lane.waypoints = self.decelerate_waypoints(base_waypoints, closest_idx)
