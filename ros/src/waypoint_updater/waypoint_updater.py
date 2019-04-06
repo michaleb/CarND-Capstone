@@ -31,26 +31,17 @@ class WaypointUpdater(object):
 		self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
 
 		# TODO: Add other member variables you need below
-		self.has_image = False
+		#self.has_image = False
 		self.pose = None
 		self.base_wps = None
 		self.waypoints_2d = None
 		self.waypoint_tree = None
-		self.stopline_wp_idx = -1
+		self.stopline_wp_idx = None
 		
 		# TODO: Add a subscriber for /traffic_waypoint and /obstacle_waypoint below
 		rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
-		rospy.Subscriber('/image_color', Image, self.image_cb)
-
-		'''# TODO: Add other member variables you need below
-		self.has_image = False
-		self.pose = None
-		self.base_wps = None
-		self.waypoints_2d = None
-		self.waypoint_tree = None
-		self.stopline_wp_idx = -1'''
 		
 		self.loop() 
 
@@ -95,7 +86,7 @@ class WaypointUpdater(object):
 		farthest_idx = closest_idx + LOOKAHEAD_WPS
 		base_waypoints = self.base_wps.waypoints[closest_idx:farthest_idx]
 
-		if (self.has_image and self.stopline_wp_idx == -1) or (self.stopline_wp_idx >= farthest_idx):
+		if (self.stopline_wp_idx == -1) or (self.stopline_wp_idx == None) or (self.stopline_wp_idx >= farthest_idx):
 			lane.waypoints = base_waypoints
 		else:
 			lane.waypoints = self.decelerate_waypoints(base_waypoints, closest_idx)
