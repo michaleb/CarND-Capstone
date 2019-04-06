@@ -42,6 +42,7 @@ class WaypointUpdater(object):
 		rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
+		rospy.Subscriber('/image_color', Image, self.image_cb)
 
 		'''# TODO: Add other member variables you need below
 		self.has_image = False
@@ -108,7 +109,7 @@ class WaypointUpdater(object):
 			p = Waypoint()
 			p.pose = wp.pose
 
-			stop_idx = max(self.stopline_wp_idx - closest_idx - 2, 0) # Two waypoints back from line so front of car stops at line
+			stop_idx = max(self.stopline_wp_idx - closest_idx - 3, 0) # Two waypoints back from line so front of car stops at line
 			
 			if i >= stop_idx:
 				vel = 0.
@@ -123,6 +124,9 @@ class WaypointUpdater(object):
 			temp.append(p)
 
 		return temp
+
+	def image_cb(self):
+		self.has_image = True
 
 	def pose_cb(self, msg):
 		# TODO: Implement
