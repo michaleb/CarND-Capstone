@@ -43,6 +43,7 @@ class WaypointUpdater(object):
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
 
 		# TODO: Add other member variables you need below
+		self.has_image = False
 		self.pose = None
 		self.base_wps = None
 		self.waypoints_2d = None
@@ -54,7 +55,7 @@ class WaypointUpdater(object):
 	def loop(self):
 		rate = rospy.Rate(20)
 		while not rospy.is_shutdown():
-			if self.pose and self.base_wps:
+			if self.pose and self.base_wps and self.has_image:
 				self.publish_waypoints()
 			rate.sleep()    
 
