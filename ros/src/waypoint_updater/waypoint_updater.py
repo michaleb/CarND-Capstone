@@ -110,7 +110,7 @@ class WaypointUpdater(object):
 			
 			else:
 				#dist = self.distance(waypoints, i, stop_idx)
-				vel = math.sqrt(2 * MAX_DECEL * self.dist[closest_idx + i])
+				vel = math.sqrt(2 * MAX_DECEL * self.dist[closest_idx + i + 1])
 				if vel < 1.:
 					vel = 0.
 
