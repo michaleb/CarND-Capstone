@@ -37,16 +37,13 @@ class WaypointUpdater(object):
 		self.waypoints_2d = None
 		self.waypoint_tree = None
 		self.stopline_wp_idx = None
-		#waypoints_2d = []
-		
+				
 		# TODO: Add a subscriber for /traffic_waypoint and /obstacle_waypoint below
 		rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
 
-		#self.dist = self.distance(waypoints_2d, 0, len(waypoints_2d) - 1)
-
-		
+				
 		self.loop() 
 
 	def loop(self):
