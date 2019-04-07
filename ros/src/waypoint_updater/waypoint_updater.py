@@ -43,7 +43,7 @@ class WaypointUpdater(object):
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
 
-		self.dist = self.distance(self.waypoints, 0, len(self.waypoints))
+		self.dist = self.distance(self.base_wps, 0, len(self.base_wps))
 		
 		self.loop() 
 
@@ -129,7 +129,7 @@ class WaypointUpdater(object):
 			self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
 			self.waypoint_tree = KDTree(self.waypoints_2d)
 		
-		return waypoints
+		return self.base_wps
 
 	def traffic_cb(self, msg):
 		# TODO: Callback for /traffic_waypoint message. Implement
