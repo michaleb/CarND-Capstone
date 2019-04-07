@@ -43,7 +43,7 @@ class WaypointUpdater(object):
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
 
-		self.dist = distance(waypoints, 0, len(base_wps))
+		self.dist = self.distance(waypoints, 0, len(base_wps))
 		
 		self.loop() 
 
