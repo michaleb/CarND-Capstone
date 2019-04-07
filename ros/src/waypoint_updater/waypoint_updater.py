@@ -42,6 +42,8 @@ class WaypointUpdater(object):
 		rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
+
+		self.dist = distance(waypoints, 0, len(base_wps))
 		
 		self.loop() 
 
@@ -95,19 +97,19 @@ class WaypointUpdater(object):
 	
 	def decelerate_waypoints(self, waypoints, closest_idx):
 		temp = []
-		for i, wp in enumerate(waypoints):
+		for i, wp in enumerate(waypoints, closest_idx):
 
 			p = Waypoint()
 			p.pose = wp.pose
 
-			stop_idx = max(self.stopline_wp_idx - closest_idx - 4, 0) # Four waypoints back from line so front of car stops at line
+			#stop_idx = max(self.stopline_wp_idx - closest_idx - 4, 0) # Four waypoints back from line so front of car stops at line
 			
-			if i >= stop_idx:
+			if i >= self.stopline_wp_idx - 2: #stop_idx:
 				vel = 0.
 			
 			else:
-				dist = self.distance(waypoints, i, stop_idx)
-				vel = math.sqrt(2 * MAX_DECEL * dist)
+				#dist = self.distance(waypoints, i, stop_idx)
+				vel = math.sqrt(2 * MAX_DECEL * self.dist[i])
 				if vel < 1.:
 					vel = 0.
 
@@ -142,10 +144,10 @@ class WaypointUpdater(object):
 		waypoints[waypoint].twist.twist.linear.x = velocity
 
 	def distance(self, waypoints, wp1, wp2):
-		dist = 0
+		dist = [] #0
 		dl = lambda a, b: math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2) #  + (a.z-b.z)**2)
 		for i in range(wp1, wp2+1):
-			dist += dl(waypoints[wp1].pose.pose.position, waypoints[i].pose.pose.position)
+			dist.append(dl(waypoints[wp1].pose.pose.position, waypoints[i].pose.pose.position))
 			wp1 = i
 		return dist
 
