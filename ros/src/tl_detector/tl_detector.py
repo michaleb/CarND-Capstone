@@ -139,6 +139,8 @@ class TLDetector(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
+        rate = rospy.Rate(3)
+        rate.sleep()
         return light.state
         #if(not self.has_image):
         #    self.prev_light_loc = None
