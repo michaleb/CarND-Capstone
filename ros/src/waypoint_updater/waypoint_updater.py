@@ -98,12 +98,15 @@ class WaypointUpdater(object):
 		temp = []
 		for i, wp in enumerate(waypoints):
 
+			# Create new waypoint message whose velocity component will be adjusted and compared with reference waypoints
 			p = Waypoint()
 			p.pose = wp.pose
 
-			stop_idx = max(self.stopline_wp_idx - closest_idx - 2, 0) # Four waypoints back from line so front of car stops at line
+			stop_idx = max(self.stopline_wp_idx - closest_idx - 2, 0) # Two waypoints back from line so front of car stops at line
 			
-			if i >= stop_idx:
+			# Ensures car comes to a full stop at stopline. All remaining waypoints within the look ahead range
+			# with indices > stop_idx will have their velocities set to 0.
+			if i >= stop_idx: 
 				vel = 0.
 			
 			else:
