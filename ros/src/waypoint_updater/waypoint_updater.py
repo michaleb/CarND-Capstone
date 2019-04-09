@@ -21,7 +21,7 @@ TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
 LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. You can change this $
-MAX_DECEL = 1.918524017
+MAX_DECEL = 3.086419753
 
 
 class WaypointUpdater(object):
@@ -85,11 +85,17 @@ class WaypointUpdater(object):
 
 		closest_idx = self.get_closest_waypoint_idx()
 		farthest_idx = closest_idx + LOOKAHEAD_WPS
+		
+		# Select a subset of total waypoints from car to lookahead index as the path the car will follow
 		base_waypoints = self.base_wps.waypoints[closest_idx:farthest_idx]
-
+		
+		# If there are no RED traffic lights detected within this path then these waypoints
+		# are published with their velocities unaltered
 		if (self.stopline_wp_idx == -1) or (self.stopline_wp_idx == None) or (self.stopline_wp_idx >= farthest_idx):
 			lane.waypoints = base_waypoints
 		else:
+			# If a RED traffic light is observed the velocities of the waypoints are altered 
+			# to allow the car to come to a smooth stop at the traffic light's stopline 
 			lane.waypoints = self.decelerate_waypoints(base_waypoints, closest_idx)
 
 		return lane	
@@ -98,7 +104,8 @@ class WaypointUpdater(object):
 		temp = []
 		for i, wp in enumerate(waypoints):
 
-			# Create new waypoint message whose velocity component will be adjusted and compared with reference waypoints
+			# Create new waypoint message whose velocity component will be adjusted and 
+			# compared to the reference waypoints
 			p = Waypoint()
 			p.pose = wp.pose
 
@@ -111,6 +118,7 @@ class WaypointUpdater(object):
 			
 			else:
 				dist = self.distance(waypoints, i, stop_idx)
+				# Calculates velocities that are proportiional to the reducing distances between the car and the stopline
 				vel = math.sqrt(2 * MAX_DECEL * dist)
 				if vel < 1.:
 					vel = 0.
@@ -147,6 +155,8 @@ class WaypointUpdater(object):
 
 	def distance(self, waypoints, wp1, wp2):
 		dist = 0
+		# The z component for the waypoints are superfluous and adds to the computational overhead
+		# when only 2-D distances are of interest
 		dl = lambda a, b: math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2) #  + (a.z-b.z)**2)
 		for i in range(wp1, wp2+1):
 			dist += dl(waypoints[wp1].pose.pose.position, waypoints[i].pose.pose.position)

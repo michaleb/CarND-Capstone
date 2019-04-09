@@ -167,7 +167,8 @@ class TLDetector(object):
                     line_wp_idx = temp_wp_idx
                     # Approximating the straight line distance (m), in the x direction, between closest stopline and car
                     sld = line[0] - self.pose.pose.position.x 
-               
+        
+        # Checks the status of the traffic light only when the car is within approx. 20m of it       
         if closest_light and sld <= 20:
             state = self.get_light_state(closest_light)
             return line_wp_idx, state
