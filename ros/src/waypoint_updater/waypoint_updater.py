@@ -20,7 +20,7 @@ as well as to verify your TL classifier.
 TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
-LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. You can change this $
+LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. 
 MAX_DECEL = 3.086419753 # The deceleration to stop the car travelling at 11.11 ms(max vel) within a distance of 20m.
 
 
@@ -31,7 +31,7 @@ class WaypointUpdater(object):
 		self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
 
 		# TODO: Add other member variables you need below
-		#self.has_image = False
+		
 		self.pose = None
 		self.base_wps = None
 		self.waypoints_2d = None
