@@ -111,24 +111,9 @@ class TLDetector(object):
 
         """
         #TODO implement
-        closest_idx = self.waypoint_tree.query([x, y], 1)[1]
+        return self.waypoint_tree.query([x, y], 1)[1]
 
-        '''#check if closest point is ahead (of car) or not
-        closest_coord = self.waypoints_2d[closest_idx]
-        prev_coord = self.waypoints_2d[closest_idx - 1]
-
-        #Equation for hyperplane through closest_coords
-        cl_vect = np.array(closest_coord)
-        prev_vect = np.array(prev_coord)
-        pos_vect = np.array([x,y])
-
-        val = np.dot(cl_vect-prev_vect, pos_vect-cl_vect)
-
-        if val > 0:
-            closest_idx = (closest_idx + 1) % len(self.waypoints_2d)'''
-
-        return closest_idx
-
+        
     def get_light_state(self, light):
         """Determines the current color of the traffic light
 
@@ -160,7 +145,7 @@ class TLDetector(object):
         """
         closest_light = None
         line_wp_idx = None
-        sld = 100
+        sld = None
         
         # List of positions that correspond to the line to stop in front of for a given intersection
         stop_line_positions = self.config['stop_line_positions']
@@ -180,10 +165,10 @@ class TLDetector(object):
                     diff = d
                     closest_light = light
                     line_wp_idx = temp_wp_idx
-        
-                    sld = line[0] - self.pose.pose.position.x # Approximating the straight line distance (in m) between stopline and car
+                    # Approximating the straight line distance (m), in the x direction, between closest stopline and car
+                    sld = line[0] - self.pose.pose.position.x 
                
-        if closest_light and sld <= 30:
+        if closest_light and sld <= 20:
             state = self.get_light_state(closest_light)
             return line_wp_idx, state
         
