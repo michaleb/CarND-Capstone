@@ -21,7 +21,7 @@ TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
 LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. You can change this $
-MAX_DECEL = 3.086419753
+MAX_DECEL = 3.086419753 # The deceleration to stop the car travelling at 11.11 ms(max vel) within a distance of 20m.
 
 
 class WaypointUpdater(object):
@@ -111,14 +111,14 @@ class WaypointUpdater(object):
 
 			stop_idx = max(self.stopline_wp_idx - closest_idx - 2, 0) # Two waypoints back from line so front of car stops at line
 			
-			# Ensures car comes to a full stop at stopline. All remaining waypoints within the look ahead range
+			# Ensures car comes to a full stop at stopline. All remaining waypoints within the given path
 			# with indices > stop_idx will have their velocities set to 0.
 			if i >= stop_idx: 
 				vel = 0.
 			
 			else:
 				dist = self.distance(waypoints, i, stop_idx)
-				# Calculates velocities that are proportiional to the reducing distances between the car and the stopline
+				# Calculates velocities that are proportiional to the reducing distances as the car moves towards the stopline
 				vel = math.sqrt(2 * MAX_DECEL * dist)
 				if vel < 1.:
 					vel = 0.
