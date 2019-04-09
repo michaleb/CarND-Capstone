@@ -43,7 +43,6 @@ class WaypointUpdater(object):
 		rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 		rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
 
-				
 		self.loop() 
 
 	def loop(self):
@@ -83,13 +82,14 @@ class WaypointUpdater(object):
 	def generate_lane(self):
 		lane = Lane()	
 
+		# Localization of the car on the road given its pose
 		closest_idx = self.get_closest_waypoint_idx()
 		farthest_idx = closest_idx + LOOKAHEAD_WPS
 		
 		# Select a subset of total waypoints from car to lookahead index as the path the car will follow
 		base_waypoints = self.base_wps.waypoints[closest_idx:farthest_idx]
 		
-		# If there are no RED traffic lights detected within this path then these waypoints
+		# If there are no RED traffic lights detected within this path these waypoints
 		# are published with their velocities unaltered
 		if (self.stopline_wp_idx == -1) or (self.stopline_wp_idx == None) or (self.stopline_wp_idx >= farthest_idx):
 			lane.waypoints = base_waypoints
@@ -129,18 +129,16 @@ class WaypointUpdater(object):
 		return temp
 
 	def pose_cb(self, msg):
-		# TODO: Implement
 		self.pose = msg
 
 	def waypoints_cb(self, waypoints):
-		# TODO: Implement
 		self.base_wps = waypoints
 		if not self.waypoints_2d:
 			self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
 			self.waypoint_tree = KDTree(self.waypoints_2d)
 		
 	def traffic_cb(self, msg):
-		# TODO: Callback for /traffic_waypoint message. Implement
+		# Callback for /traffic_waypoint message. 
 		self.stopline_wp_idx = msg.data
 
 	def obstacle_cb(self, msg):
