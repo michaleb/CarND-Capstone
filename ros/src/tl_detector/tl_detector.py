@@ -165,6 +165,7 @@ class TLDetector(object):
                     diff = d
                     closest_light = light
                     line_wp_idx = temp_wp_idx
+                    
                     # Approximating the straight line distance (m), in the x direction, between closest stopline and car
                     sld = line[0] - self.pose.pose.position.x 
         
