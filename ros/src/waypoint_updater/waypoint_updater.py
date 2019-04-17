@@ -36,7 +36,7 @@ class WaypointUpdater(object):
 		self.base_wps = None
 		self.waypoints_2d = None
 		self.waypoint_tree = None
-		self.stopline_wp_idx = None
+		self.stopline_wp_idx = -1 #None
 				
 		# TODO: Add a subscriber for /traffic_waypoint and /obstacle_waypoint below
 		rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
