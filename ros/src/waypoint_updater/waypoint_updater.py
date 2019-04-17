@@ -91,7 +91,7 @@ class WaypointUpdater(object):
 		
 		# If there are no RED traffic lights detected within this path these waypoints
 		# are published with their velocities unaltered
-		if (self.stopline_wp_idx == -1) or (self.stopline_wp_idx == None) or (self.stopline_wp_idx >= farthest_idx):
+		if (self.stopline_wp_idx == -1) or (self.stopline_wp_idx >= farthest_idx): #or (self.stopline_wp_idx == None)
 			lane.waypoints = base_waypoints
 		else:
 			# If a RED traffic light is observed the velocities of the waypoints are altered 
