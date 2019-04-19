@@ -21,7 +21,7 @@ TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
 LOOKAHEAD_WPS = 30 # Number of waypoints we will publish. 
-MAX_DECEL = 3.086419753 # The deceleration to stop the car travelling at 11.11 ms(max vel) within a distance of 20m.
+MAX_DECEL = 1.234567901 #3.086419753 # The deceleration to stop the car travelling at 11.11 ms(max vel) within a distance of 50m #20m.
 
 
 class WaypointUpdater(object):
