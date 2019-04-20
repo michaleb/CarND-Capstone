@@ -33,7 +33,7 @@ For the project of interest are the Perception, Planning and Control subsystems.
 subscribes to : **/base_waypoints**, **/current_pose**, **/image_color**
 publishes to : **/traffic_waypoint** 
 
-I implemented the 'process_traffic_light' method of the tl_detector and it uses the car's current position to determine which base_waypoints are closest to the car and subsequently determines, from a list of traffic light coordinates, which traffic light is closest and ahead of the car. Once this is ascertained the tl_classifier executes the clasification of the images from the **/image_color** messages to obtain the color of the traffic light and if it is RED publishes its waypoint index. The tl_classifier was implemented using SSD and was done by Wenhan (Team Lead).				
+I implemented the 'process_traffic_light' method of the tl_detector and it uses the car's current position to determine which base_waypoints are closest to the car and subsequently determines, from a list of traffic light coordinates, which traffic light is closest and ahead of the car. Once this is ascertained the tl_classifier executes the clasification of the images from the **/image_color** messages to obtain the color of the traffic light and if it is RED publishes its waypoint index. The tl_classifier was implemented using SSD and was done by Qianqiao and Wenhan (Team Lead).				
 
 **2.** The **Planning** subsystem provides the trajectory for the car to follow it comprises the waypoint loader and the waypoint updater nodes.
 
