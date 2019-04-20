@@ -57,7 +57,7 @@ class TLDetector(object):
 
         #Detection&Classification initialization
         graph_file = 'ssd_mobilenet_v1_coco_11_06_2017/frozen_inference_graph.pb'
-        model_path = 'tl_model.h5'
+        model_path = 'true_model.h5'
 
         #cmap = ImageColor.colormap
         #self.COLOR_LIST = sorted([c for c in cmap.keys()])
@@ -316,7 +316,7 @@ class TLDetector(object):
         #plt.imshow(img_np)
         #plt.show()
         return img_np
-
+    """
     def tl_classification(self, image_seg):
         signal_classes = ['Red', 'Green', 'Yellow']
 
@@ -337,7 +337,23 @@ class TLDetector(object):
             #print(tl_color,', Classification confidence:', predict[np.argmax(predict)])
 
         return tl_color
+        """
+    
+    def tl_classification(self, image_seg):
+        signal_classes = ['Red', 'Yellow', 'Green']
 
+        test = np.array([image_seg])
+
+        # Prediction
+        with self.cls_graph.as_default():
+            tl_predict = self.cls_model.predict(test)
+            
+            tl_predict = np.squeeze(tl_predict, axis =0)
+            # Get color classification
+            tl_color = signal_classes[np.argmax(tl_predict)]
+            #print(tl_color,', Classification confidence:', predict[np.argmax(predict)])
+
+        return tl_color
 
 
     
