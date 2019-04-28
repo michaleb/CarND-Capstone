@@ -9,8 +9,8 @@
 
 |Name                       	|Submission email         |
 |:------------------------------|:------------------------|
-|Wenhan Yang (Team Lead)    	| wenhan_yuan@hotmail.com | 
-|Michale Bailey             	| michale.bailey@gmail.com|   
+|Michale Bailey             	| michale.bailey@gmail.com| 
+|Wenhan Yang (Team Lead)       	| wenhan_yuan@hotmail.com |   
 |Qianqiao Zhang             	| zhangqianqiao@outlook.com|
 |Simon Miyingo              	|simonpetermiyingo@gmail.com| 
 
