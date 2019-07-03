@@ -9,7 +9,7 @@
 
 |Name                       	|Submission email         |
 |:------------------------------|:------------------------|
-|Michale Bailey             	| michale.bailey@gmail.com| 
+|Michale Bailey             	|                         | 
 |Wenhan Yang (Team Lead)       	| wenhan_yuan@hotmail.com |   
 |Qianqiao Zhang             	| zhangqianqiao@outlook.com|
 |Simon Miyingo              	|simonpetermiyingo@gmail.com| 
@@ -35,7 +35,7 @@ publishes to : **/traffic_waypoint**
 
 I implemented the 'process_traffic_light' method of the tl_detector and it uses the car's current position to determine which base_waypoints are closest to the car and subsequently determines, from a list of traffic light coordinates, which traffic light is closest and ahead of the car. Once this is ascertained the tl_classifier executes the clasification of the images from the **/image_color** messages to obtain the color of the traffic light and if it is RED publishes its waypoint index. The tl_classifier was implemented using SSD and was done by Qianqiao and Wenhan (Team Lead).				
 
-**2.** The **Planning** subsystem provides the trajectory for the car to follow it comprises the waypoint loader and the waypoint updater nodes.
+**2.** The **Planning** subsystem provides the trajectory for the car to follow, it comprises the waypoint loader and the waypoint updater nodes.
 
 The waypoint loader node has no subscribers and only publishes to: **/base_waypoints**
 
@@ -46,7 +46,7 @@ The waypoint updater node
 subscribes to: **/base_waypoints**, **/current_pose** and **/traffic_waypoints**
 publishes to: **/final_waypoints**
 
-I implemented this node and it updates the velocity component of the base waypoints based on traffic light conditions. If the closest traffic light ahead of the car is showing RED then the velocities of all base waypoints between the car's current position up to the LOOKAHEAD_WPS limit will be altered to facilitate the deceleration of the car to 0 m/s at the stopline. Any other traffic light condition and the car will travel at the reference velocities of these base waypoints.
+I also implemented this node and it updates the velocity component of the base waypoints based on traffic light conditions. If the closest traffic light ahead of the car is showing RED then the velocities of all base waypoints between the car's current position up to the LOOKAHEAD_WPS limit will be altered to facilitate the deceleration of the car to 0 m/s at the stopline. Any other traffic light condition and the car will travel at the reference velocities of these base waypoints.
 
 There are two main functions in the node, 'generate_lane' and 'decelerate_waypoints'. Once the closest waypoint index is ascertained, by finding the index of the waypoint that is just ahead of the car's position, in the 'generate_lane' function it is used to select a subset of waypoints that will form the lane message that is then published to **/final_waypoints** message.
 
